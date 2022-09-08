@@ -1,0 +1,9 @@
+{
+    "env":{
+        "MONGO_USER":"farhan",
+        "MONGO_PASSWORD":"e7dAU6DHAmyyktuv",
+        "MONGO_DEFAULT_DATABASE":"test",
+        "USER_Email":"farhanbajwa46@gmail.com",
+        "USER_PASSWORD":"emejxqlvclttlrka"
+    }
+}
