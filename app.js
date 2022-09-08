@@ -53,6 +53,9 @@ app.use((req, res, next) => {
 })
 
 app.use('/auth', authRoutes);
+app.use('/',(req,res)=>{
+    res.status(200).json({message:"Authentication Api"})
+})
 
 app.use((error, req, res) => {
     console.log(error);
