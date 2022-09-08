@@ -7,9 +7,9 @@ const jwt = require('jsonwebtoken')
 const deleteFile = require('../util/deleteFile')
 
 // eslint-disable-next-line no-undef
-var userEmail = process.env.userEmail;
+var userEmail = process.env.USER_EMAIL;
 // eslint-disable-next-line no-undef
-var userPassword = process.env.userPassword;
+var userPassword = process.env.USER_PASSWORD;
 
 var transporter = nodeMailer.createTransport(`smtps://${userEmail}:${userPassword}@smtp.gmail.com`);
 
@@ -56,7 +56,7 @@ exports.signup = (req, res, next) => {
                 subject: 'email verification', // Subject line
                 text: 'Verify your Email Address click the link below',       // plaintext body
                 html: `<h6>Verify your Email Address click the link below</h6>
-                    <p>click this link <a href="https://localhost3000.com/verify/${token}">reset password</a> to set password. </p>` // html body
+                    <p>click this link <a href="https://authtestapi.herokuapp.com/verify/${token}">reset password</a> to set password. </p>` // html body
             };
 
             transporter.sendMail(mailOptions, function (error, info) {
@@ -176,7 +176,7 @@ exports.resetPassword = (req, res, next) => {
             subject: 'password reset', // Subject line
             text: 'Hello world from Node.js',       // plaintext body
             html: `<p>you requested a password reset</p>
-                        <p>click this link <a href="http://localhost:3000/auth/resetPassword/${token}">reset password</a> to set password. </p>` // html body
+                        <p>click this link <a href="https://authtestapi.herokuapp.com/auth/resetPassword/${token}">reset password</a> to set password. </p>` // html body
         };
 
 
