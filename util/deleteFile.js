@@ -1,4 +1,4 @@
-const fs = require(fs)
+const fs = require('fs')
 
 const deleteFile = (filepath) =>{
     fs.unlink(filepath,(err)=>{
