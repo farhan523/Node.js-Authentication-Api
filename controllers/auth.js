@@ -39,7 +39,7 @@ exports.signup = (req, res, next) => {
 
 
 
-    const hash = bcrypt.hashSync(password, 12);
+    const hash = bcrypt.hashSync(password, 2);
 
     const newUser = new User({ name, email, password: hash, imageUrl, isVerified: false });
 
