@@ -20,14 +20,14 @@ exports.signup = (req, res, next) => {
         let error = new Error("validation failed");
         error.statusCode = 422;
         error.data = errors.array();
-        throw error;
+        error;
     }
 
     //  check if the user have added the file 
     if (!req.file) {
         const error = new Error('no profile image provided.');
         error.statusCode = 422;
-        throw error;
+        next(error);
     }
 
     const email = req.body.email;
@@ -56,7 +56,7 @@ exports.signup = (req, res, next) => {
                 subject: 'email verification', // Subject line
                 text: 'Verify your Email Address click the link below',       // plaintext body
                 html: `<h6>Verify your Email Address click the link below</h6>
-                    <p>click this link <a href="https://authtestapi.herokuapp.com/verify/${token}">reset password</a> to set password. </p>` // html body
+                    <p>click this link <a href="https://authtestapi.herokuapp.com/auth/verify/${token}">to verify email</a> to set password. </p>` // html body
             };
 
             transporter.sendMail(mailOptions, function (error, info) {
