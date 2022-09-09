@@ -51,7 +51,7 @@ exports.signup = (req, res, next) => {
 
 
             var mailOptions = {
-                from: 'farhanbajwa46@gmail.com',    // sender address
+                from: userEmail,    // sender address
                 to: user.email, // list of receivers
                 subject: 'email verification', // Subject line
                 text: 'Verify your Email Address click the link below',       // plaintext body
@@ -172,7 +172,7 @@ exports.resetPassword = (req, res, next) => {
         user.resetToken = token;
         user.resetTokenExpiration = Date.now() + 3600000;
         var mailOptions = {
-            from: 'farhanbajwa46@gmail.com',    // sender address
+            from: userEmail,    // sender address
             to: user.email, // list of receivers
             subject: 'password reset', // Subject line
             text: 'Hello world from Node.js',       // plaintext body
