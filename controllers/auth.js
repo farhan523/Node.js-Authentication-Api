@@ -20,7 +20,7 @@ exports.signup = (req, res, next) => {
         let error = new Error("validation failed");
         error.statusCode = 422;
         error.data = errors.array();
-        error;
+        next(error);
     }
 
     //  check if the user have added the file 
@@ -28,6 +28,7 @@ exports.signup = (req, res, next) => {
         const error = new Error('no profile image provided.');
         error.statusCode = 422;
         next(error);
+        return;
     }
 
     const email = req.body.email;
