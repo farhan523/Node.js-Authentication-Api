@@ -65,7 +65,7 @@ app.use((error, req, res) => {
     res.status(status).json({ message: message, data: data })
 })
 
-mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.bnacrmq.mongodb.net/${process.env.MONGO_DEFAULT_DATABASE}?retryWrites=true&w=majority`)
+mongoose.connect(`mongodb+srv://${process.env.MONGO_USER || "farhan"}:${process.env.MONGO_PASSWORD || "e7dAU6DHAmyyktuv"}@cluster0.bnacrmq.mongodb.net/${process.env.MONGO_DEFAULT_DATABASE || "test"}?retryWrites=true&w=majority`)
     .then(() => {
         console.log('connect')
         app.listen(port)

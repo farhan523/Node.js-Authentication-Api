@@ -7,9 +7,9 @@ const jwt = require('jsonwebtoken')
 const deleteFile = require('../util/deleteFile')
 
 // eslint-disable-next-line no-undef
-var userEmail = process.env.USER_EMAIL;
+var userEmail = process.env.USER_EMAIL || "farhanbajwa46@gmail.com";
 // eslint-disable-next-line no-undef
-var userPassword = process.env.USER_PASSWORD;
+var userPassword = process.env.USER_PASSWORD || "emejxqlvclttlrka";
 
 var transporter = nodeMailer.createTransport(`smtps://${userEmail}:${userPassword}@smtp.gmail.com`);
 
@@ -20,15 +20,16 @@ exports.signup = (req, res, next) => {
         let error = new Error("validation failed");
         error.statusCode = 422;
         error.data = errors.array();
-        throw error;
+        res.json(error)
+        return;
     }
 
     //  check if the user have added the file 
     if (req.file == undefined) {
         const error = new Error('no profile image provided.');
         error.statusCode = 422;
-        throw error;
-        
+        res.json(error)
+        return;
     }
 
     const email = req.body.email;
@@ -90,12 +91,14 @@ exports.verifyEmail = (req, res, next) => {
         decodedToken = jwt.verify(token, "secret")
     } catch (err) {
         err.statusCode = 500
-        throw err;
+        res.json(err)
+        return;
     }
     if (!decodedToken) {
         const error = new Error("invalid Token");
         error.statusCode = 401;
-        throw error;
+        res.json(error)
+        return;
     }
 
     User.findOne({ _id: decodedToken.userId }).then((user) => {
@@ -116,7 +119,8 @@ exports.login = (req, res, next) => {
         let error = new Error("validation failed");
         error.statusCode = 422;
         error.data = errors.array();
-        throw error;
+        res.json(error)
+        return;
     }
     let loadUser;
     User.findOne({ email: email }).then((user) => {
@@ -145,7 +149,7 @@ exports.login = (req, res, next) => {
             userId: loadUser._id.toString(),
         }, 'secret', { expiresIn: '1h' })
 
-        res.status(200).json({ token})
+        res.status(200).json({ token })
     }).catch((err) => {
         if (!err.statusCode) {
             err.statusCode = 500;
@@ -212,7 +216,8 @@ exports.updatePassword = (req, res, next) => {
     if (!authHeader) {
         const error = new Error('Not authenticated.');
         error.statusCode = 401;
-        throw error;
+        res.json(error)
+        return;
     }
 
     const token = authHeader.split(' ')[1];
