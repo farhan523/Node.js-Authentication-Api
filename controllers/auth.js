@@ -19,17 +19,15 @@ exports.signup = (req, res, next) => {
     if (!errors.isEmpty()) {
         let error = new Error("validation failed");
         error.statusCode = 422;
-        error.data = errors.array();
-        res.json(error)
-        return;
+        error.data = errors.array();    
+       throw error;
     }
 
     //  check if the user have added the file 
     if (req.file == undefined) {
         const error = new Error('no profile image provided.');
         error.statusCode = 422;
-        res.json(error)
-        return;
+        throw error;
     }
 
     const email = req.body.email;
@@ -91,14 +89,13 @@ exports.verifyEmail = (req, res, next) => {
         decodedToken = jwt.verify(token, "secret")
     } catch (err) {
         err.statusCode = 500
-        res.json(err)
-        return;
+        throw err;
+        
     }
     if (!decodedToken) {
         const error = new Error("invalid Token");
         error.statusCode = 401;
-        res.json(error)
-        return;
+        throw error;
     }
 
     User.findOne({ _id: decodedToken.userId }).then((user) => {
@@ -119,8 +116,7 @@ exports.login = (req, res, next) => {
         let error = new Error("validation failed");
         error.statusCode = 422;
         error.data = errors.array();
-        res.json(error)
-        return;
+        throw error
     }
     let loadUser;
     User.findOne({ email: email }).then((user) => {
@@ -130,7 +126,7 @@ exports.login = (req, res, next) => {
             throw error;
         }
         if (!user.isVerified) {
-            const error = new Error("No user exist with this email address");
+            const error = new Error("Email Address is not verified");
             error.statusCode = 401;
             throw error;
         }

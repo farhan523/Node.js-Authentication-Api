@@ -53,12 +53,12 @@ app.use((req, res, next) => {
 })
 
 app.use('/auth', authRoutes);
-app.use('/',(req,res)=>{
-    res.status(200).json({message:"Authentication Api"})
-})
+// app.use('/',(req,res)=>{
+//     res.status(200).json({message:"Authentication Api"})
+// })
 
-app.use((error, req, res) => {
-    console.log(error);
+// eslint-disable-next-line no-unused-vars
+app.use((error, req, res,next) => {
     const status = error.statusCode || 500;
     const message = error.message;
     const data = error.data;
