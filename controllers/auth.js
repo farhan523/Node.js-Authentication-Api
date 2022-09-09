@@ -7,9 +7,9 @@ const jwt = require('jsonwebtoken')
 const deleteFile = require('../util/deleteFile')
 
 // eslint-disable-next-line no-undef
-var userEmail = process.env.USER_EMAIL || "farhanbajwa46@gmail.com";
+var userEmail = process.env.USER_EMAIL
 // eslint-disable-next-line no-undef
-var userPassword = process.env.USER_PASSWORD || "emejxqlvclttlrka";
+var userPassword = process.env.USER_PASSWORD
 
 var transporter = nodeMailer.createTransport(`smtps://${userEmail}:${userPassword}@smtp.gmail.com`);
 
@@ -243,9 +243,7 @@ exports.updatePassword = (req, res, next) => {
 
 exports.updateProfile = (req, res, next) => {
     User.findOne({ _id: req.userId }).then((user) => {
-        console.log('soo',user)
         let name = user.name
-        console.log(req.body.name)
         if(req.body.name)
             name = req.body.name
       
