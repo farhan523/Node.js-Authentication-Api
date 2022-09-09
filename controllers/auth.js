@@ -24,7 +24,7 @@ exports.signup = (req, res, next) => {
     }
 
     //  check if the user have added the file 
-    if (!req.file) {
+    if (req.file == undefined) {
         const error = new Error('no profile image provided.');
         error.statusCode = 422;
         next(error);
