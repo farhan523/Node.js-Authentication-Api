@@ -243,13 +243,18 @@ exports.updatePassword = (req, res, next) => {
 
 exports.updateProfile = (req, res, next) => {
     User.findOne({ _id: req.userId }).then((user) => {
-        user.name = req.body.name || user.name;
+        console.log('soo',user)
+        let name = user.name
+        console.log(req.body.name)
+        if(req.body.name)
+            name = req.body.name
+      
+        let image = user.imageUrl
         if (req.file) {
             deleteFile(user.imageUrl)
-            user.imageUrl = req.file.path;
+            image= req.file.path;
         }
-
-        return user.save();
+        return user.updateOne({name:name,imageUrl:image});
     }).then(() => {
         res.status(204).json({ message: "profile updated" })
     }).catch((err) => {
