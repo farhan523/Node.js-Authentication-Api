@@ -33,7 +33,7 @@ function fileFilter(req, file, cb) {
         cb(null, false);
     }
 
-// just git
+
     // To accept the file pass `true`, like so:
 
 
