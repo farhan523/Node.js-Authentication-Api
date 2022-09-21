@@ -1,11 +1,11 @@
-const express = require('express');
+const express    = require('express');
 const authRoutes = require('./routes/auth')
-const { json } = require('body-parser');
-const mongoose = require('mongoose')
-const path = require('path')
-const multer = require('multer')
-const port = process.env.PORT || 3000
-const helmet = require('helmet')
+const { json }   = require('body-parser');
+const mongoose   = require('mongoose')
+const path       = require('path')
+const multer     = require('multer')
+const port       = process.env.PORT || 3000
+const helmet     = require('helmet')
 
 const app = express();
 app.use(helmet())
@@ -58,10 +58,10 @@ app.use('/auth', authRoutes);
 // })
 
 // eslint-disable-next-line no-unused-vars
-app.use((error, req, res,next) => {
-    const status = error.statusCode || 500;
+app.use((error, req, res, next) => {
+    const status  = error.statusCode || 500;
     const message = error.message;
-    const data = error.data;
+    const data    = error.data;
     res.status(status).json({ message: message, data: data })
 })
 

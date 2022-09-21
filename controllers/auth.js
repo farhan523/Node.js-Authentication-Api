@@ -19,8 +19,8 @@ exports.signup = (req, res, next) => {
     if (!errors.isEmpty()) {
         let error = new Error("validation failed");
         error.statusCode = 422;
-        error.data = errors.array();    
-       throw error;
+        error.data = errors.array();
+        throw error;
     }
 
     //  check if the user have added the file 
@@ -51,10 +51,10 @@ exports.signup = (req, res, next) => {
 
 
             var mailOptions = {
-                from: userEmail,    // sender address
-                to: user.email, // list of receivers
-                subject: 'email verification', // Subject line
-                text: 'Verify your Email Address click the link below',       // plaintext body
+                from: userEmail,                                                // sender address
+                to: user.email,                                               // list of receivers
+                subject: 'email verification',                                     // Subject line
+                text: 'Verify your Email Address click the link below',         // plaintext body
                 html: `<h6>Verify your Email Address click the link below</h6>
                     <p>click this link <a href="https://authtestapi.herokuapp.com/auth/verify/${token}">to verify email</a> to set password. </p>` // html body
             };
@@ -90,7 +90,7 @@ exports.verifyEmail = (req, res, next) => {
     } catch (err) {
         err.statusCode = 500
         throw err;
-        
+
     }
     if (!decodedToken) {
         const error = new Error("invalid Token");
@@ -172,10 +172,10 @@ exports.resetPassword = (req, res, next) => {
         user.resetToken = token;
         user.resetTokenExpiration = Date.now() + 3600000;
         var mailOptions = {
-            from: userEmail,    // sender address
-            to: user.email, // list of receivers
-            subject: 'password reset', // Subject line
-            text: 'Hello world from Node.js',       // plaintext body
+            from: userEmail,                              // sender address
+            to: user.email,                             // list of receivers
+            subject: 'password reset',                       // Subject line
+            text: 'Hello world from Node.js',             // plaintext body
             html: `<p>you requested a password reset</p>
                         <p>click this link <a href="https://authtestapi.herokuapp.com/auth/resetPassword/${token}">reset password</a> to set password. </p>` // html body
         };
@@ -244,15 +244,15 @@ exports.updatePassword = (req, res, next) => {
 exports.updateProfile = (req, res, next) => {
     User.findOne({ _id: req.userId }).then((user) => {
         let name = user.name
-        if(req.body.name)
+        if (req.body.name)
             name = req.body.name
-      
+
         let image = user.imageUrl
         if (req.file) {
             deleteFile(user.imageUrl)
-            image= req.file.path;
+            image = req.file.path;
         }
-        return user.updateOne({name:name,imageUrl:image});
+        return user.updateOne({ name: name, imageUrl: image });
     }).then(() => {
         res.status(204).json({ message: "profile updated" })
     }).catch((err) => {
